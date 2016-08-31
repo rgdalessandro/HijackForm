@@ -1,10 +1,10 @@
 let assert = chai.assert;
 let should = chai.should;
+let expect = chai.expect;
 
-describe('Array', function() {
-  it('should start empty', function() {
-    let arr = [];
-
-    assert.equal(arr.length, 0);
+// I could not get the tests working
+describe('bind.js', function() {
+  it('should parse correctly and have a function named `hijackForm`', function(){
+    expect(hijackForm.to.be.an('object'));
   });
 });

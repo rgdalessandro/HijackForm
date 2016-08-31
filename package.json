@@ -4,7 +4,7 @@
   "description": "coding challenge to intercept and hijack form data on a submit (click) event",
   "main": "/server/server.js",
   "scripts": {
-    "start": "nodemon server/server.js"
+    "start": "node server/server.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "babelify": "^7.3.0",
     "body-parser": "^1.15.2",
     "browserify-middleware": "^7.0.0",
+    "cors": "^2.8.0",
     "express": "^4.14.0",
     "jquery": "^3.1.0",
     "path": "^0.12.7"

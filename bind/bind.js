@@ -2,7 +2,7 @@ import $ from 'jquery';
 import { getIp, sendPayload } from '../models/model';
 
 // use jQuery ready funciton to execute hijackForm() function on DOM ready
-// using jQuery ensures this function will trigger as intended on most browsers
+// using jQuery ensures this function will trigger as intended on virtually all browsers
 $(document).ready(function(){
   hijackForm();
 });
@@ -10,12 +10,23 @@ $(document).ready(function(){
 // this function is executed automatically on DOM ready by jQuery
 // it removes the 'onclick' attribute for #submit_button
 // and adds a jQuery click event listener to fire the sendData() function
-// this function prevents all previously bound event handlers from firing
-function hijackForm() {
+// it also removes the submit-on-enter-key from #lp_form and adds a
+// jQuery on-enter-key-press listener to fire the sendData() function
+// it also prevents all previously bound event handlers from firing
+export function hijackForm() {
+  // handle clicking on #submit_button
   $('#submit_button').attr('onclick', '');
   $('#submit_button').click((event) => { 
     event.preventDefault();
-    sendData(event)
+    sendData(event);
+  });
+
+  // handles pressing the enter key while in the form
+  $('#lp_form').keypress(function(event){
+    if ( event.which == 13 ) { // Enter key = keycode 13
+      event.preventDefault();
+      sendData(event);
+    }
   });
 }
 
@@ -32,8 +43,7 @@ function sendData(event) {
     .then( response => {
       console.log('response.data', response.data)
       if (response.data.result == 'ok') {
-        debugger
-        window.location.replace(url);  // <----------------  ??????
+        window.location.replace('https://www.getoptimind.com/lp/optimind-secure/checkout');
       } else {
         alert('The request failed!');
       }
@@ -46,7 +56,7 @@ function sendData(event) {
 function createPayload() {
   return getIp()
   .then(function(ip) {
-    console.log('ip address', ip)
+    console.log('ip address', ip.data.query)
     return {
       user: {
         name: document.getElementById('user[name]').value,
