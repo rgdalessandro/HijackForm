@@ -13,7 +13,7 @@ $(document).ready(function(){
 // it also removes the submit-on-enter-key from #lp_form and adds a
 // jQuery on-enter-key-press listener to fire the sendData() function
 // it also prevents all previously bound event handlers from firing
-export function hijackForm() {
+window.hijackForm = function() {
   // handle clicking on #submit_button
   $('#submit_button').attr('onclick', '');
   $('#submit_button').click((event) => { 
@@ -33,7 +33,7 @@ export function hijackForm() {
 // the payload object is obtained from the createPayload() function, then
 // stringified and sent by axios to a local endpoint by way of the model
 // when the promise resolves, we either redirect user or alert an error
-function sendData(event) {
+window.sendData = function(event) {
   const payloadObject = createPayload()
   .then((payload) => {
     const url = payload.session.current_url;
@@ -53,7 +53,7 @@ function sendData(event) {
 
 // createPayload() makes a call for client's IP address through model
 // when promise resolves, payload object is created from form data
-function createPayload() {
+window.createPayload = function() {
   return getIp()
   .then(function(ip) {
     console.log('ip address', ip.data.query)
